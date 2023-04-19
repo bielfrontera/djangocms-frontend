@@ -11,7 +11,7 @@ REQUIREMENTS = [
     "djangocms-attributes-field>=1",
     "djangocms-text-ckeditor>=3.1.0",
     "django-select2",
-    "django-entangled",
+    "django-entangled>=0.5.4",
 ]
 
 EXTRA_REQUIREMENTS = {
@@ -41,6 +41,7 @@ CLASSIFIERS = [
     "Framework :: Django :: 3.2",
     "Framework :: Django :: 4.0",
     "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
     "Framework :: Django CMS",
     "Framework :: Django CMS :: 3.8",
     "Framework :: Django CMS :: 3.9",

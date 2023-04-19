@@ -33,28 +33,20 @@ from .helpers import get_choices, get_object_for_value
 
 mixin_factory = settings.get_forms(link)
 
-# Weak dependency on djangocms_icon
-# (Even if djangocms_icon is in the python path, the admin form will fail due to missing
-# templates if it's not in INSTALLED_APPS)
-if "djangocms_icon" in django_settings.INSTALLED_APPS:
-    from djangocms_icon.fields import IconField
-else:
-    class IconField(forms.CharField):  # lgtm [py/missing-call-to-init]
+if "djangocms_frontend.contrib.icon" in django_settings.INSTALLED_APPS:
+    # Weak dependency on djangocms_frontend.contrib.icon
+    from djangocms_frontend.contrib.icon.fields import IconPickerField
+elif "djangocms_icon" in django_settings.INSTALLED_APPS:  # pragma: no cover
+    # Weak dependency on djangocms_icon
+    # (Even if djangocms_icon is in the python path, the admin form will fail due to missing
+    # templates if it's not in INSTALLED_APPS)
+    from djangocms_icon.fields import IconField as IconPickerField
+else:  # pragma: no cover
+
+    class IconPickerField(forms.CharField):  # lgtm [py/missing-call-to-init]
         def __init__(self, *args, **kwargs):
             kwargs["widget"] = forms.HiddenInput
             super().__init__(*args, **kwargs)
-
-
-def get_templates():
-    choices = [
-        ("default", _("Default")),
-    ]
-    choices += getattr(
-        settings,
-        "DJANGOCMS_LINK_TEMPLATES",
-        [],
-    )
-    return choices
 
 
 HOSTNAME = getattr(settings, "DJANGOCMS_LINK_INTRANET_HOSTNAME_PATTERN", None)
@@ -301,7 +293,9 @@ else:
                         )
 
 
-class LinkForm(mixin_factory("Link"), SpacingFormMixin, TemplateChoiceMixin, AbstractLinkForm):
+class LinkForm(
+    mixin_factory("Link"), SpacingFormMixin, TemplateChoiceMixin, AbstractLinkForm
+):
     class Meta:
         model = FrontendUIItem
         entangled_fields = {
@@ -327,8 +321,8 @@ class LinkForm(mixin_factory("Link"), SpacingFormMixin, TemplateChoiceMixin, Abs
     )
     template = forms.ChoiceField(
         label=_("Template"),
-        choices=get_templates(),
-        initial=first_choice(get_templates()),
+        choices=settings.LINK_TEMPLATE_CHOICES,
+        initial=first_choice(settings.LINK_TEMPLATE_CHOICES),
     )
     link_stretched = forms.BooleanField(
         label=_("Stretch link"),
@@ -373,12 +367,12 @@ class LinkForm(mixin_factory("Link"), SpacingFormMixin, TemplateChoiceMixin, Abs
         required=False,
         help_text=_("Extends the button to the width of its container."),
     )
-    icon_left = IconField(
+    icon_left = IconPickerField(
         label=_("Icon left"),
         initial="",
         required=False,
     )
-    icon_right = IconField(
+    icon_right = IconPickerField(
         label=_("Icon right"),
         initial="",
         required=False,

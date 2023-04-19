@@ -2,10 +2,30 @@
 Changelog
 =========
 
-unpublished
-===========
+1.1.1
+=====
+
+* Django 4.2 compatibility
+* Allow accordion header size to unset resulting in an accordion item header with
+  standard size (#119).
+* Fix a bug that overwrote image sizes by 640x400 if both width and height were given (#117).
+* Update of docs on how to correctly see IconPlugin instances in CKEDITOR (#115)
+* Add ruff as linter
+
+1.1.0
+=====
+
+* Add djangocms_frontend.contrib.icon
+* Fix a bug which lets a carousel not start on django CMS 4.0+
+* Update translations
+* Add tests for Django 4.2
+
+1.0.2
+=====
 
 * Add missing form mixin for link plugin (allowing it to be extended)
+* Fix Link template choices from correct setting
+* Improve carousel form, remove illegal options for Bootstrap 5
 
 1.0.1
 =====

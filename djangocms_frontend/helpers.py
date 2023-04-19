@@ -121,7 +121,9 @@ def add_plugin(placeholder, plugin):
         placeholder.add_plugin(plugin)
     else:  # CMS < v4
         if plugin.parent:
-            plugin.position -= plugin.parent.position + 1  # Restart position counting at 0
+            plugin.position -= (
+                plugin.parent.position + 1
+            )  # Restart position counting at 0
         else:
             plugin.position -= 1  # 0-based counting in v3
         plugin.save()
@@ -130,6 +132,13 @@ def add_plugin(placeholder, plugin):
 def delete_plugin(plugin):
     """CMS version save function to delete a plugin (and its descendants) from a placeholder"""
     return plugin.placeholder.delete_plugin(plugin)
+
+
+def is_first_child(instance, parent):
+    if hasattr(instance.placeholder, "add_plugin"):  # available as of CMS v4
+        return instance.position == parent.position + 1
+    else:
+        return instance.position == 0
 
 
 def coerce_decimal(value):

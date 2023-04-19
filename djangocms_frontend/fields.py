@@ -19,8 +19,7 @@ class TemplateChoiceMixin:
             choices = template_field.choices
             instance = kwargs.get("instance", None)
             if len(choices) == 1 and (
-                instance is None
-                or instance.config.get("template", "") == choices[0][0]
+                instance is None or instance.config.get("template", "") == choices[0][0]
             ):
                 template_field.widget = forms.HiddenInput()
 
@@ -66,7 +65,9 @@ class IconMultiselect(forms.CheckboxSelectMultiple):  # lgtm [py/missing-call-to
         super().__init__(*args, **kwargs)
 
 
-class OptionalDeviceChoiceField(forms.MultipleChoiceField):  # lgtm [py/missing-call-to-init]
+class OptionalDeviceChoiceField(
+    forms.MultipleChoiceField
+):  # lgtm [py/missing-call-to-init]
     def __init__(self, **kwargs):
         kwargs.setdefault("choices", settings.DEVICE_CHOICES)
         kwargs.setdefault("initial", None)
@@ -156,16 +157,11 @@ class ChoicesFormField(fields.AttributesFormField):
 
 class TagTypeField(models.CharField):
     def __init__(self, *args, **kwargs):
-        if "verbose_name" not in kwargs:
-            kwargs["verbose_name"] = _("Tag type")
-        if "choices" not in kwargs:
-            kwargs["choices"] = settings.TAG_CHOICES
-        if "default" not in kwargs:
-            kwargs["default"] = first_choice(settings.TAG_CHOICES)
-        if "max_length" not in kwargs:
-            kwargs["max_length"] = 255
-        if "help_text" not in kwargs:
-            kwargs["help_text"] = _("Select the HTML tag to be used.")
+        kwargs.setdefault("verbose_name", _("Tag type"))
+        # Choices are not defined at database level but in the form field below
+        kwargs.setdefault("default", first_choice(settings.TAG_CHOICES))
+        kwargs.setdefault("max_length", 255)
+        kwargs.setdefault("help_text", _("Select the HTML tag to be used."))
         super().__init__(*args, **kwargs)
 
 
@@ -190,6 +186,7 @@ class AutoNumberInput(forms.NumberInput):  # lgtm [py/missing-call-to-init]
 
 try:
     from djangocms_text_ckeditor.fields import HTMLFormField  # noqa
+
     HTMLsanitized = True
 except ModuleNotFoundError:
     HTMLFormField = forms.CharField

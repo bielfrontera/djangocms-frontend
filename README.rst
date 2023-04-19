@@ -121,6 +121,7 @@ For a manual install:
       'djangocms_frontend.contrib.collapse',
       'djangocms_frontend.contrib.content',
       'djangocms_frontend.contrib.grid',
+      'djangocms_frontend.contrib.icon',
       'djangocms_frontend.contrib.image',
       'djangocms_frontend.contrib.jumbotron',
       'djangocms_frontend.contrib.link',
@@ -163,7 +164,7 @@ See readthedocs for the `documentation
 .. |python| image:: https://img.shields.io/badge/python-3.7+-blue.svg
    :target: https://pypi.org/project/djangocms-frontend/
 
-.. |django| image:: https://img.shields.io/badge/django-3.2--4.1-blue.svg
+.. |django| image:: https://img.shields.io/badge/django-3.2--4.2-blue.svg
    :target: https://www.djangoproject.com/
 
 .. |djangocms| image:: https://img.shields.io/badge/django%20CMS-3.8%2B-blue.svg
