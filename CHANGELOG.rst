@@ -2,6 +2,42 @@
 Changelog
 =========
 
+unpublished
+===========
+
+* Fix bug: set proper image target link in template
+
+1.1.6 (2023-07-26)
+==================
+
+* Fix incomplete migration of code plugins from djangocms-bootstrap4
+* Add compiled French locale (*.mo)
+* Add partial Dutch locale
+
+1.1.5 (2023-07-14)
+==================
+
+* Fix bug where url for link select2 field was lost after app hook reload (#135)
+* Use `bg-body` class on Bootstrap 5's tab navigation to support color modes (#138)
+* Fix styling of icon buttons for better usager with plain django admin style (#141)
+
+1.1.4 (2023-05-28)
+==================
+
+* Fix css issues
+
+1.1.3 (2023-05-26)
+==================
+
+* Add: Image is not text-enabled
+* Fix row and column admin style to work with Django admin themes that use flexbox.
+
+1.1.2 (2023-04-25)
+==================
+
+* Fix asset loading for icon picker with whitenoise or other static file servers
+
+
 1.1.1
 =====
 
